@@ -33,8 +33,7 @@ The time spent by the three methods is compared as follows.<br>
 | threading      | crawl_mps.py  | crawl_mps.json  |17.01          |
 | multiprocessing| crawl_mps.py  | crawl_mth.json  |17.03          |
 
-<br>
-The conditions at different points in time, such as the number of times the server is accessed at the same time, may be different. The three methods are almost as fast, and the time difference is very small.
+The python code writing or style within this project may not be the most efficient. In addition, the conditions at different points in time, such as the number of times the server that is accessed at the same time, may be different. The three methods are almost as fast, and the time difference is pretty small.
 <br><br>
 
 ---
