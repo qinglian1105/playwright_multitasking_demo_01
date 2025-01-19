@@ -3,7 +3,7 @@
 ## **Web scraping with Playwright by different methods of multitasking**
 
 ### **Ⅰ. Purpose** 
-The content of this project is an experiment of comparing among several methods, including multithreading, multiprocessing, asynchronous and synchronous, for web scraping with Playwright.<br><br>
+The content of this project is an experiment of comparing several multitasking methods, including multithreading, multiprocessing, asynchronous and synchronous, for web scraping with Playwright.<br><br>
 
 ### **Ⅱ. Tools or Packages**
 Playwright, threading, multiprocessing and asyncio. <br><br>
@@ -23,7 +23,7 @@ Thanks for the website, "https://www.pocket.tw/etf/", provided by Pocket Securit
 
 __3. Results__ <br>
 
-As you can see in the folder of this project, four methods, multithreading, multiprocessing, asynchronous and synchronous, for web scraping, are written into four different files. (Please refer to "./\*.py" ) <br>
+As you can see in the folder of this project, four methods, including multithreading, multiprocessing, asynchronous and synchronous, for web scraping are written into different files. (Please refer to "./\*.py" ) <br>
 The content of html will be pared, processed, and then saved into a JSON file. (Please refer to "./outputs/\*.json" ) <br>
 The time spent by the four methods is compared as follows.<br><br> 
 
@@ -35,7 +35,9 @@ The time spent by the four methods is compared as follows.<br><br>
 | Synchronous    |                | crawl_loop.py | crawl_loop.json | 38.01         |
 
 <br>
-Obviously, except for the method of Synchronous, the other three are more than 2 times faster. The python code writing or style within this project may not be the most efficient. In addition, the conditions at different points in time, such as the number of times the server that is accessed at the same time, may have different impacts. The other three methods are almost as fast, and the time difference is pretty small.
+Obviously, except for the method of Synchronous, the other three are more than 2 times faster. The python code writing or style within this project may not be the most efficient.<br> 
+In addition, the conditions at different points in time, such as the number of times the server that is accessed at the same time, may have different impacts.<br> 
+To sum up, the other three methods are almost as fast, and the time difference is pretty small.
 <br><br><br>
 
 ---
