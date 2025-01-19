@@ -3,7 +3,7 @@
 ## **Web scraping with Playwright by different methods of multitasking**
 
 ### **Ⅰ. Purpose** 
-The content of this project is an experiment of the comparison of three methods, including threading, multiprocessing and asyncio, for web scraping with Playwright.<br><br>
+The content of this project is an experiment of comparing among several methods, including multithreading, multiprocessing, asynchronous and synchronous, for web scraping with Playwright.<br><br>
 
 ### **Ⅱ. Tools or Packages**
 Playwright, threading, multiprocessing and asyncio. <br><br>
@@ -23,18 +23,20 @@ Thanks for the website, "https://www.pocket.tw/etf/", provided by Pocket Securit
 
 __3. Results__ <br>
 
-As you can see in the folder of this project, three methods, including threading, multiprocessing and asyncio, are written into three python files. (Please refer to "./\*.py" ) <br>
+As you can see in the folder of this project, four methods, multithreading, multiprocessing, asynchronous and synchronous, for web scraping, are written into four different files. (Please refer to "./\*.py" ) <br>
 The content of html will be pared, processed, and then saved into a JSON file. (Please refer to "./outputs/\*.json" ) <br>
-The time spent by the three methods is compared as follows.<br> 
+The time spent by the four methods is compared as follows.<br><br> 
 
-| Method         | Python file   | Output file     | Time spent (s)|
-| :---           | :----         | :---            | :---:         |
-| asyncio        | crawl_async.py| crawl_async.json|16.69          |
-| threading      | crawl_mps.py  | crawl_mps.json  |17.01          |
-| multiprocessing| crawl_mps.py  | crawl_mth.json  |17.03          |
+| Method         | Package        | Python file   | Output file     | Time spent (s)|
+| :---           | :---           | :----         | :---            | :---:         |
+| Asynchronous   | asyncio        | crawl_async.py| crawl_async.json| 16.69         |
+| Multithreading | threading      | crawl_mps.py  | crawl_mps.json  | 17.01         |
+| Multiprocessing| multiprocessing| crawl_mps.py  | crawl_mth.json  | 17.03         |
+| Synchronous    |                | crawl_loop.py | crawl_loop.json | 38.01         |
 
-The python code writing or style within this project may not be the most efficient. In addition, the conditions at different points in time, such as the number of times the server that is accessed at the same time, may be different. The three methods are almost as fast, and the time difference is pretty small.
-<br><br>
+<br>
+Obviously, except for the method of Synchronous, the other three are more than 2 times faster. The python code writing or style within this project may not be the most efficient. In addition, the conditions at different points in time, such as the number of times the server that is accessed at the same time, may have different impacts. The other three methods are almost as fast, and the time difference is pretty small.
+<br><br><br>
 
 ---
 

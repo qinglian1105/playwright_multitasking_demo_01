@@ -14,72 +14,83 @@ xph_tb = '//*[@id="__layout"]/div/div/div[2]/main/div/div[4]/section/div[2]/div/
 
 # Scrap data from website
 def scraping(multi_task, url, multi_task_id):
-    start = time.perf_counter()
-    prcs_pid = os.getpid()
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-        page.goto(url, wait_until="domcontentloaded")
-        time.sleep(0.5)
-        etf = {}
+    try:
+        start = time.perf_counter()
+        prcs_pid = os.getpid()
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page()
+            page.goto(url, wait_until="domcontentloaded")
+            time.sleep(0.5)
+            etf = {}
 
-        # Start to scrape data
-        # Get holding_date
-        e_code = url[url.find("/tw/") + 4 : url.find("/fundholding?")]
-        xpah_date_ele = page.query_selector_all(xph_date)
-        holding_date_ele = xpah_date_ele[0].text_content()
-        holding_date = holding_date_ele[5:]
-        if multi_task not in ["mth"]:
-            print(
-                f"PID_{prcs_pid} (Process_{multi_task_id}) starts for task: {e_code} - <{holding_date_ele}>"
-            )
-        else:
-            print(
-                f"Thread_{multi_task_id} starts for task: {e_code} - <{holding_date_ele}>"
-            )
+            # Start to scrape data
+            # Get holding_date
+            e_code = url[url.find("/tw/") + 4 : url.find("/fundholding?")]
+            xpah_date_ele = page.query_selector_all(xph_date)
+            holding_date_ele = xpah_date_ele[0].text_content()
+            holding_date = holding_date_ele[5:]
+            if multi_task in ["mps"]:
+                print(
+                    f"PID_{prcs_pid} (Process_{multi_task_id}) starts for task: {e_code} - <{holding_date_ele}>"
+                )
+            elif multi_task in ["ths"]:
+                print(
+                    f"Thread_{multi_task_id} starts for task: {e_code} - <{holding_date_ele}>"
+                )
+            else:
+                print(
+                    f"Loop_{multi_task_id} starts for task: {e_code} - <{holding_date_ele}>"
+                )
 
-        # Get etf code and name
-        xpah_name_ele = page.query_selector_all(xph_name)
-        eles = xpah_name_ele[0].text_content()
-        eles_list = eles.split("\n")
-        etf_code = eles_list[2].strip()
-        etf_name = eles_list[1].strip()
-        etf["etf_code"] = etf_code
-        etf["etf_name"] = etf_name
-        etf["scraping_time"] = time.strftime("%Y-%m-%d %H:%M:%S")
-        if multi_task not in ["mth"]:
-            print(
-                f"PID_{prcs_pid} (Process_{multi_task_id}) parsing data: {etf['etf_name']}({etf['etf_code']})"
-            )
-        else:
-            print(
-                f"Thread_{multi_task_id} parsing data: {etf['etf_name']}({etf['etf_code']})"
-            )
+            # Get etf code and name
+            xpah_name_ele = page.query_selector_all(xph_name)
+            eles = xpah_name_ele[0].text_content()
+            eles_list = eles.split("\n")
+            etf_code = eles_list[2].strip()
+            etf_name = eles_list[1].strip()
+            etf["etf_code"] = etf_code
+            etf["etf_name"] = etf_name
+            etf["scraping_time"] = time.strftime("%Y-%m-%d %H:%M:%S")
+            if multi_task in ["mps"]:
+                print(
+                    f"PID_{prcs_pid} (Process_{multi_task_id}) parsing data: {etf['etf_name']}({etf['etf_code']})"
+                )
+            elif multi_task in ["mth"]:
+                print(
+                    f"PID_{prcs_pid} (Process_{multi_task_id}) parsing data: {etf['etf_name']}({etf['etf_code']})"
+                )
+            else:
+                print(
+                    f"Loop_{multi_task_id} parsing data: {etf['etf_name']}({etf['etf_code']})"
+                )
 
-        # Parse data
-        trs = page.query_selector_all(xph_tb)
-        tr_list = []
-        for tr in trs:
-            tr_str = tr.text_content()
-            tr_list.append(tr_str.split("\n"))
+            # Parse data
+            trs = page.query_selector_all(xph_tb)
+            tr_list = []
+            for tr in trs:
+                tr_str = tr.text_content()
+                tr_list.append(tr_str.split("\n"))
 
-        tb = []
-        for tl in tr_list:
-            dic = {}
-            dic["s_code"] = tl[0]
-            dic["s_name"] = tl[1].strip()
-            dic["holding_percentage"] = tl[3].strip()
-            dic["holding_amount"] = tl[4][:-1].replace(",", "").strip()
-            dic["unit"] = tl[4][-1]
-            tb.append(dic)
+            tb = []
+            for tl in tr_list:
+                dic = {}
+                dic["s_code"] = tl[0]
+                dic["s_name"] = tl[1].strip()
+                dic["holding_percentage"] = tl[3].strip()
+                dic["holding_amount"] = tl[4][:-1].replace(",", "").strip()
+                dic["unit"] = tl[4][-1]
+                tb.append(dic)
 
-        etf["etf_holding"] = tb
-        browser.close()
-    finish = time.perf_counter()
-    print(
-        f"Time consuming of scraping ({etf_code}): {round(finish - start, 2)} (seconds)"
-    )
-    return [etf, holding_date]
+            etf["etf_holding"] = tb
+            browser.close()
+        finish = time.perf_counter()
+        print(
+            f"Time spent of scraping ({etf_code}): {round(finish - start, 2)} (seconds)"
+        )
+        return [etf, holding_date]
+    except Exception as e:
+        print(e)
 
 
 # Write data into json-file
@@ -124,6 +135,6 @@ def save_to_json_file(output_path, etfs_holding, holding_date):
             except Exception as e:
                 print(e)
         finish = time.perf_counter()
-        print(f"Time consuming of saving file: {round(finish - start, 2)} (seconds)")
+        print(f"Time spent of saving file: {round(finish - start, 2)} (seconds)")
     except Exception as e:
         print(e)

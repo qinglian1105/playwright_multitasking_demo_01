@@ -68,10 +68,10 @@ async def async_worker(task_queue, results, worker_id):
             results.append([etf, holding_date])
             finish = time.perf_counter()
             print(
-                f"Worker_{worker_id} - Time consuming of opening browser: {round(open_finish - open_start, 2)} (seconds)"
+                f"Worker_{worker_id} - Time spent of opening browser: {round(open_finish - open_start, 2)} (seconds)"
             )
             print(
-                f"Worker_{worker_id} - Time consuming of scraping: {round(finish - start, 2)} (seconds)"
+                f"Worker_{worker_id} - Time spent of scraping: {round(finish - start, 2)} (seconds)"
             )
             await browser.close()
         task_queue.task_done()
@@ -107,5 +107,5 @@ if __name__ == "__main__":
     asyncio.run(main())
     finish = time.perf_counter()
     print("PID:", this_pid)
-    print(f"Time consuming of the programming: {round(finish - start, 2)} (seconds)")
+    print(f"Time spent of the programming: {round(finish - start, 2)} (seconds)")
     print("-" * 30)
