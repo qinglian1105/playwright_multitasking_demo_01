@@ -1,0 +1,12 @@
+version: "3"
+services:   
+  crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: playwright_v01
+    image: img_playwright_v01
+    volumes:
+      - /Your_file_path:/app/outputs
+    environment:
+      TZ: Asia/Taipei   

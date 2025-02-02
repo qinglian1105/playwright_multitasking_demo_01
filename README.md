@@ -37,7 +37,9 @@ The time spent by the four methods is compared as follows.<br><br>
 <br>
 Obviously, except for the method of Synchronous, the other three are more than 2 times faster. The python code writing or style within this project may not be the most efficient.<br> 
 In addition, the conditions at different points in time, such as the number of times the server that is accessed at the same time, may have different impacts.<br> 
-To sum up, the other three methods are almost as fast, and the time difference is pretty small.
+To sum up, the other three methods are almost as fast, and the time difference is pretty small.<br><br>
+( Dockerizing Playwright For Web Scraping, please refer to Dockerfile and docker-compose.yml )
+
 <br><br><br>
 
 ---
@@ -46,6 +48,6 @@ To sum up, the other three methods are almost as fast, and the time difference i
 
 [1] [Playwright for Python - Docs](<https://playwright.dev/python/docs/intro>)
 
-[2] [Yahoo Finance(Taiwan) - ETF asset ranking](<https://tw.stock.yahoo.com/tw-etf/total-assets>)
+[2] [Yahoo Finance (Taiwan) - ETF asset ranking](<https://tw.stock.yahoo.com/tw-etf/total-assets>)
 
 [3] [Pocket Securities - ETF](<https://www.pocket.tw/etf/>)
