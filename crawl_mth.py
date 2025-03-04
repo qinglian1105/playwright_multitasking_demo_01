@@ -14,7 +14,7 @@ def mth_worker(task_queue, result_queue, thread_id):
                 task = task_queue.get(block=False)
             except queue.Empty:
                 break
-            result = shg.scraping("mps", task, thread_id)
+            result = shg.scraping("mth", task, thread_id)
             result_queue.put(result)
             task_queue.task_done()
     except Exception as e:

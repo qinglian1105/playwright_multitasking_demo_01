@@ -34,13 +34,13 @@ def scraping(multi_task, url, multi_task_id):
                 print(
                     f"PID_{prcs_pid} (Process_{multi_task_id}) starts for task: {e_code} - <{holding_date_ele}>"
                 )
-            elif multi_task in ["ths"]:
+            elif multi_task in ["mth"]:
                 print(
-                    f"Thread_{multi_task_id} starts for task: {e_code} - <{holding_date_ele}>"
+                    f"PID_{prcs_pid} (Thread_{multi_task_id}) starts for task: {e_code} - <{holding_date_ele}>"
                 )
             else:
                 print(
-                    f"Loop_{multi_task_id} starts for task: {e_code} - <{holding_date_ele}>"
+                    f"PID_{prcs_pid} (Loop_{multi_task_id}) starts for task: {e_code} - <{holding_date_ele}>"
                 )
 
             # Get etf code and name
@@ -58,11 +58,11 @@ def scraping(multi_task, url, multi_task_id):
                 )
             elif multi_task in ["mth"]:
                 print(
-                    f"PID_{prcs_pid} (Process_{multi_task_id}) parsing data: {etf['etf_name']}({etf['etf_code']})"
+                    f"PID_{prcs_pid} (Thread_{multi_task_id}) parsing data: {etf['etf_name']}({etf['etf_code']})"
                 )
             else:
                 print(
-                    f"Loop_{multi_task_id} parsing data: {etf['etf_name']}({etf['etf_code']})"
+                    f"PID_{prcs_pid} (Loop_{multi_task_id}) parsing data: {etf['etf_name']}({etf['etf_code']})"
                 )
 
             # Parse data
